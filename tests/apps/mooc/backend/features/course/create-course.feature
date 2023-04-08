@@ -7,9 +7,21 @@ Feature: Create a new course
         Given I send a PUT request to "/courses/9cf6a653-9137-495f-997c-a77e14fb98c5" with body:
         """
         {
+            "id": "9cf6a653-9137-495f-997c-a77e14fb98c5",
             "name": "The best course",
             "duration": "5 hours"
         }
         """
         Then the response status code should be 201
         And the response should be empty
+
+    Scenario: An invalid non existing course
+        Given I send a PUT request to "/courses/9cf6a653-9137-495f-997c-a77e14fb98c5" with body:
+        """
+        {
+            "id": "9cf6a653-9137-495f-997c-a77e14fb98c5",
+            "name": 5,
+            "duration": "5 hours"
+        }
+        """
+        Then the response status code should be 422
