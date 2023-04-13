@@ -2,12 +2,12 @@ services:
 
   Mooc.MongoConfig:
     factory:
-      class: ../../../../../Contexts/Mooc/Shared/infrastructure/persistence/mongo/MongoConfigFactory
+      class: ../../../../../Contexts/Shared/infrastructure/persistence/mongo/MongoConfigFactory
       method: 'createConfig'
   
-  Mooc.MongoConfig:
+  Mooc.ConnectionManager:
     factory:
-      class: ../../../../../Contexts/Mooc/Shared/infrastructure/persistence/mongo/MongoClientFactory
+      class: ../../../../../Contexts/Shared/infrastructure/persistence/mongo/MongoClientFactory
       method: 'createClient'
     arguments: ['mooc', '@Mooc.MongoConfig']
 

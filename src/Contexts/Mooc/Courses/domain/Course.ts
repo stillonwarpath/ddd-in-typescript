@@ -1,3 +1,4 @@
+import { AggregateRoot } from '../../../Shared/domain/AggregateRoot';
 import { CourseId } from '../../Shared/domain/Courses/CourseId';
 import { CourseDuration } from './CourseDuration';
 import { CourseName } from './CourseName';
@@ -16,6 +17,7 @@ export class Course extends AggregateRoot {
 		name: CourseName;
 		duration: CourseDuration;
 	}) {
+		super();
 		this.id = id;
 		this.name = name;
 		this.duration = duration;
