@@ -2,7 +2,7 @@ import { CourseId } from "../../../../../src/Contexts/Mooc/Shared/domain/Courses
 
 export class CourseIdMother {
 	static create(value: string): CourseId {
-		return new CourseIdMother(value);
+		return new CourseId(value);
 	}
 
 	static random(): CourseId {

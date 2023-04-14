@@ -5,6 +5,12 @@ import { CourseIdMother } from '../../Shared/domain/CourseIdMother';
 import { CourseDurationMother } from '../domain/CourseDurationMother';
 import { CourseNameMother } from '../domain/CourseNameMother';
 
+interface CreateCourseRequest {
+	id: string;
+	name: string;
+	duration: string;
+}
+
 export class CreateCourseRequestMother {
 	static create(id: CourseId, name: CourseName, duration: CourseDuration): CreateCourseRequest {
 		return { id: id.value, name: name.value, duration: duration.value };
