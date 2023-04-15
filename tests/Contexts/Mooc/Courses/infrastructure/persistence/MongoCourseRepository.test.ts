@@ -14,7 +14,7 @@ beforeEach(async () => {
 });
 
 afterAll(async () => {
-	await environmentArranger.arrange();
+	//await environmentArranger.arrange();
 	await environmentArranger.close();
 });
 
