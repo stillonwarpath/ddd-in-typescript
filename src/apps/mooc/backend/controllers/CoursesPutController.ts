@@ -8,10 +8,12 @@ export class CoursesPutController implements Controller {
 	constructor(private readonly courseCreator: CourseCreator) {}
 
 	async run(req: Request, res: Response): Promise<void> {
-		const { id, name, duration } = req.body;
-
-		await this.courseCreator.run({ id, name, duration });
-
-		res.status(httpStatus.CREATED).send();
+		try {
+			const { id, name, duration } = req.body;
+			await this.courseCreator.run({ id, name, duration });
+			res.status(httpStatus.CREATED).send();
+		} catch (error) {
+			res.status(httpStatus.INTERNAL_SERVER_ERROR).send();
+		}
 	}
 }
