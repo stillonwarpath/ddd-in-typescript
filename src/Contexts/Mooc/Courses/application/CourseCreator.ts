@@ -1,3 +1,4 @@
+import { EventBus } from '../../../Shared/domain/EventBus';
 import { CourseId } from '../../Shared/domain/Courses/CourseId';
 import { Course } from '../domain/Course';
 import { CourseDuration } from '../domain/CourseDuration';
@@ -6,11 +7,7 @@ import { CourseRepository } from '../domain/CourseRepository';
 import { CourseCreatorRequest } from './CourseCreatorRequest';
 
 export class CourseCreator {
-	private readonly repository: CourseRepository;
-
-	constructor(repository: CourseRepository) {
-		this.repository = repository;
-	}
+	constructor(private readonly repository: CourseRepository, private readonly eventBus: EventBus) {}
 
 	async run(request: CourseCreatorRequest) {
 		const course = new Course({
@@ -18,7 +15,7 @@ export class CourseCreator {
 			name: new CourseName(request.name),
 			duration: new CourseDuration(request.duration)
 		});
-
-		return this.repository.save(course);
+		await this.repository.save(course);
+		await this.eventBus.publish(course.pullDomainEvents());
 	}
 }
