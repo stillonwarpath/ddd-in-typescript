@@ -10,11 +10,11 @@ export class CourseCreator {
 	constructor(private readonly repository: CourseRepository, private readonly eventBus: EventBus) {}
 
 	async run(request: CourseCreatorRequest) {
-		const course = new Course({
-			id: new CourseId(request.id),
-			name: new CourseName(request.name),
-			duration: new CourseDuration(request.duration)
-		});
+		const course = Course.create(
+			new CourseId(request.id),
+			new CourseName(request.name),
+			new CourseDuration(request.duration)
+		);
 		await this.repository.save(course);
 		await this.eventBus.publish(course.pullDomainEvents());
 	}

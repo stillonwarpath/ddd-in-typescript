@@ -14,7 +14,7 @@ describe('CourseCreator', () => {
 	beforeEach(() => {
 		repository = new CourseRepositoryMock();
 		eventBus = new EventBusMock();
-		creator = new CourseCreator(repository);
+		creator = new CourseCreator(repository, eventBus);
 	});
 
 	it('should create a valid course', async () => {
