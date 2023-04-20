@@ -1,8 +1,10 @@
 import { Given } from 'cucumber';
+import { EventBus } from '../../../../../../src/Contexts/Shared/domain/EventBus';
 
 import container from '../../../../../../src/apps/mooc/backend/dependency-injection';
-import { EventBus } from '../../../../../../src/Contexts/Shared/domain/EventBus';
-}
+import { DomainEventDeserializer } from '../../../../../../src/Contexts/Shared/infrastructure/EventBus/DomainEventDeserializer';
+import { DomainEventSubscribers } from '../../../../../../src/Contexts/Shared/infrastructure/EventBus/DomainEventSubscribers';
+
 const eventBus = container.get('Mooc.Shared.domain.EventBus') as EventBus;
 const deserializer = buildDeserializer();
 
@@ -16,7 +18,7 @@ Given('I send an event to the event bus:', async (event: any) => {
 function buildDeserializer() {
 	const subscribers = DomainEventSubscribers.from(container);
 
-	return domainEventDeserializer.configure(subscribers);
+	return DomainEventDeserializer.configure(subscribers);
 }
 
 async function wait(milliseconds: number) {
