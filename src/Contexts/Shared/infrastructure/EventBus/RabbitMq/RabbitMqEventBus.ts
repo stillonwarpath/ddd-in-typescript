@@ -2,20 +2,36 @@ import { DomainEvent } from '../../../domain/DomainEvent';
 import { EventBus } from '../../../domain/EventBus';
 
 export class RabbitMqEventBus implements EventBus {
+	private failoverPublisher: DomainEventFailoverPublisher;
 	private readonly connection: RabbitMqConnection;
+	private exchange: string;
 
-	constructor(params: { connection: RabbitMqConnection }) {
-		this.connection = params.connection;
+	constructor(params: {
+		failoverPublisher: DomainEventFailoverPublisher; 
+		connection: RabbitMqConnection 
+		exchange: string;
+	}) {
+		const { failoverPublisher, connection, exchange  } = params;
+		this.failoverPublisher = failoverPublisher;
+		this.connection = connection;
+		this.exchange = exchange;
 	}
 
 	async publish(events: Array<DomainEvent>): Promise<void> {
 		for (const event of events) {
-			const routingKey = event.eventName;
-			const content = this.serialize(event);
-			const options = this.options(event);
-			const exchange = this.exchange;
 
-			await this.connection.publish({ routingKey, content, options, exchange });
+			try {
+
+				const routingKey = event.eventName;
+				const content = this.serialize(event);
+				const options = this.options(event);
+				const exchange = this.exchange;
+
+				await this.connection.publish({ routingKey, content, options, exchange });
+
+			} catch (error: any) {
+				await this.failoverPublisher.publish(event);
+			}
 		}
 	}
 
