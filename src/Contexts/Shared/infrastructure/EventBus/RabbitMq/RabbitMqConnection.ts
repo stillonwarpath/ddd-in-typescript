@@ -64,6 +64,22 @@ export class RabbitMQConnection {
 		});
 	}
 
+	async queue(params: { exchange: string; name: string; routingKeys: string[] }) {
+		const durable = true;
+		const exclusive = false;
+		const autoDelete = false;
+
+		await this.channel?.assertQueue(params.name, {
+			exclusive,
+			durable,
+			autoDelete
+		});
+
+		for (const routingKey of params.routingKeys) {
+			await this.channel?.bindQueue(params.name, params.exchange, routingKey);
+		}
+	}
+
 	async close() {
 		await this.channel?.close();
 

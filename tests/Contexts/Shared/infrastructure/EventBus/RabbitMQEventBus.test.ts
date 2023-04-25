@@ -1,5 +1,5 @@
-import { RabbitMQConnection } from '../../../../../src/Contexts/Shared/infrastructure/EventBus/RabbitMq/RabbitMqConnection';
-import { RabbitMqEventBus } from '../../../../../src/Contexts/Shared/infrastructure/EventBus/RabbitMq/RabbitMqEventBus';
+import { RabbitMQConnection } from '../../../../../src/Contexts/Shared/infrastructure/EventBus/RabbitMQ/RabbitMqConnection';
+import { RabbitMqEventBus } from '../../../../../src/Contexts/Shared/infrastructure/EventBus/RabbitMQ/RabbitMqEventBus';
 import { CoursesCounterIncrementedDomainEventMother } from '../../../Mooc/CoursesCounter/domain/CoursesCounterIncrementedDomainEventMother';
 
 describe('RabbitMQEventBus test', () => {
